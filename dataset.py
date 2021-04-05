@@ -16,13 +16,13 @@ class FruitDataset(torch.utils.data.Dataset):
         
         #sort images for consistency
         self.imgs = [image for image in sorted(os.listdir(files_dir)) if image[-3:] == '.jpg']
-        self.classes = [_, 'apple', 'banana', 'orange']
+        self.classes = ['_', 'apple', 'banana', 'orange']
 
     def __getitem__(self, index):
         img_name = self.imgs[idx]
         image_path = os.path.join(self.files_dir, img_name)
         img = cv2.imread(image_path)
-        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32))
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
         img_res = cv2.resize(img_rgb, (self.width, self.height), cv2.INTER_AREA)
         
         #divide all pixels rgb vals by 255
@@ -89,6 +89,4 @@ class FruitDataset(torch.utils.data.Dataset):
     def __len__(self):
         return len(self.imgs)  
     
-    def __len__(self)
-        return 0
 
