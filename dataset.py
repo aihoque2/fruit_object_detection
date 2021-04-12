@@ -16,10 +16,11 @@ class FruitDataset(torch.utils.data.Dataset):
         
         #sort images for consistency
         self.imgs = [image for image in sorted(os.listdir(files_dir)) if image[-3:] == '.jpg']
+        print("here's images: ", self.imgs)
         self.classes = ['_', 'apple', 'banana', 'orange']
 
     def __getitem__(self, index):
-        img_name = self.imgs[idx]
+        img_name = self.imgs[index]
         image_path = os.path.join(self.files_dir, img_name)
         img = cv2.imread(image_path)
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32)
