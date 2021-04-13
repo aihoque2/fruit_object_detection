@@ -15,8 +15,7 @@ class FruitDataset(torch.utils.data.Dataset):
         self.width = width
         
         #sort images for consistency
-        self.imgs = [image for image in sorted(os.listdir(files_dir)) if image[-3:] == '.jpg']
-        print("here's images: ", self.imgs)
+        self.imgs = [image for image in sorted(os.listdir(files_dir)) if image[-3:] == 'jpg']
         self.classes = ['_', 'apple', 'banana', 'orange']
 
     def __getitem__(self, index):
@@ -55,17 +54,17 @@ class FruitDataset(torch.utils.data.Dataset):
             ymax = int(member.find('bndbox').find('ymax').text)
 
             xmin_corr = (xmin/wt)*self.width
-            xmax_corr = (xmax/wt)*self.height
+            xmax_corr = (xmax/wt)*self.width
             ymin_corr = (ymin/ht)*self.height
             ymax_corr = (ymax/ht)*self.height
 
-            boxes.append([xmin_corr, ymin_corr, ymax_corr, ymax_corr])
+            boxes.append([xmin_corr, ymin_corr, xmax_corr, ymax_corr])
 
         #convert boxes into tensors
-        boxes = torch.as_tensor(boxes, dtype=float32)
+        boxes = torch.as_tensor(boxes, dtype=torch.float32)
 
         #areas of the boxes
-        area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2], boxes[:, 4])
+        area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
 
         iscrowd = torch.zeros((boxes.shape[0],), dtype=torch.int64)
         labels = torch.as_tensor(labels, dtype=torch.int64)
