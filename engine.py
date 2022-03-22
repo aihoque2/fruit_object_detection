@@ -66,7 +66,6 @@ def _get_iou_types(model):
         iou_types.append("keypoints")
     return iou_types
 
-
 @torch.no_grad()
 def evaluate(model, data_loader, device):
     n_threads = torch.get_num_threads()
@@ -84,8 +83,7 @@ def evaluate(model, data_loader, device):
     for images, targets in metric_logger.log_every(data_loader, 100, header):
         images = list(img.to(device) for img in images)
 
-        if torch.cuda.is_available():
-            torch.cuda.synchronize()
+        torch.cuda.synchronize()
         model_time = time.time()
         outputs = model(images)
 
