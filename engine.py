@@ -66,6 +66,10 @@ def _get_iou_types(model):
         iou_types.append("keypoints")
     return iou_types
 
+@torch.no_grad
+def test_model(model, data_loader, device):
+    return 0
+
 @torch.no_grad()
 def evaluate(model, data_loader, device):
     n_threads = torch.get_num_threads()
